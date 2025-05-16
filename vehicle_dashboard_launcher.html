@@ -7,19 +7,39 @@
       font-family: Arial, sans-serif;
       margin: 40px;
     }
-    input, button {
+    .form-container {
+      width: 100%;
+      padding: 0 20px;
+      box-sizing: border-box;
+    }
+    form {
+      display: flex;
+      width: 100%;
+    }
+    input[type="text"] {
+      flex-grow: 1;
       font-size: 16px;
       padding: 6px 10px;
       margin-right: 8px;
+      box-sizing: border-box;
+    }
+    button {
+      font-size: 16px;
+      padding: 6px 16px;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <h2>Go to Vehicle Dashboard</h2>
-  <form onsubmit="event.preventDefault(); openUrl()">
-    <input type="text" id="vehicleInput" placeholder="Enter Vehicle ID">
-    <button type="submit">Go</button>
-  </form>
+  <div class="form-container">
+    <div class="ad-widget-label label-container ads-link-toggle-container ng-binding ads-link-toggle-item" ng-class="{'ads-link-toggle-item' : controller.isDrillDownEnabled}" ng-style="controller.labelStyle" ng-bind-html="controller.widget.text" style="color: rgb(0, 0, 0); font-size: 18px; text-align: center; white-space: pre-wrap; margin: 4px;">
+      <strong>Search all events for a single vehicle</strong>
+    </div>
+    <form onsubmit="event.preventDefault(); openUrl()">
+      <input type="text" id="vehicleInput" placeholder="Enter Vehicle ID">
+      <button type="submit">Go</button>
+    </form>
+  </div>
 
   <script>
     function openUrl() {
