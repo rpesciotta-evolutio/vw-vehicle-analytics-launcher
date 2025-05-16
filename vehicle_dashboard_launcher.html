@@ -25,7 +25,8 @@
     function openUrl() {
       var vehicleId = document.getElementById("vehicleInput").value.trim();
       if (vehicleId) {
-        var baseUrl = "https://your-appd-dashboard-url.com/#/custom-dashboard?vehicleId=";
+        var baseUrl = "https://evolutio-volkswagen-msla.saas.appdynamics.com/controller/#/location=ANALYTICS_ADQL_SEARCH&timeRange=last_1_hour.BEFORE_NOW.-1.-1.60&searchId=875&vehicleId="+vehicleId;
+        console.log("Submit clicked: ", baseUrl);
         window.open(baseUrl + encodeURIComponent(vehicleId), '_blank');
       }
     }
