@@ -44,7 +44,7 @@
       var vehicleId = document.getElementById("vehicleInput").value.trim();
       if (vehicleId) {
         var encodedId = encodeURIComponent(vehicleId);
-        var url = `https://evolutio-volkswagen-msla.saas.appdynamics.com/controller/#/location=ANALYTICS_ADQL_SEARCH&timeRange=last_1_day.BEFORE_NOW.-1.-1.1440&adqlQuery=SELECT%2520*%2520FROM%2520rp_raw_test%2520WHERE%2520vehicleId%2520LIKE%2520%2522${encodedId}*%2522%2520ORDER%2520BY%2520eventTimestamp%2520asc%2520LIMIT%25201000&searchType=SINGLE&searchMode=ADVANCED&viewMode=DATA`;
+        var url = `https://evolutio-volkswagen-msla.saas.appdynamics.com/controller/#/location=ANALYTICS_ADQL_SEARCH&timeRange=last_8_days.BEFORE_NOW.-1.-1.1440&adqlQuery=SELECT%2520*%2520FROM%2520rp_raw_test%2520WHERE%2520vehicleId%2520LIKE%2520%2522${encodedId}*%2522%2520ORDER%2520BY%2520eventTimestamp%2520asc%2520LIMIT%25201000&searchType=SINGLE&searchMode=ADVANCED&viewMode=DATA`;
         console.log("Submit clicked: ", url);
         window.open(url, '_blank');
       }
