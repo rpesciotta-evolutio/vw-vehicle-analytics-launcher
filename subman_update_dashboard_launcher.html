@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Vehicle Dashboard Redirect</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px 10px 10px 10px;
+    }
+    .form-container {
+      width: 100%;
+      padding: 0 20px;
+      box-sizing: border-box;
+    }
+    form {
+      display: flex;
+      width: 100%;
+    }
+    input[type="text"] {
+      flex-grow: 1;
+      font-size: 16px;
+      padding: 6px 10px;
+      margin-right: 8px;
+      box-sizing: border-box;
+    }
+    button {
+      font-size: 16px;
+      padding: 6px 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <div class="ad-widget-label label-container ads-link-toggle-container ng-binding ads-link-toggle-item" ng-class="{'ads-link-toggle-item' : controller.isDrillDownEnabled}" ng-style="controller.labelStyle" ng-bind-html="controller.widget.text" style="color: rgb(0, 0, 0); font-size: 18px; text-align: left; white-space: pre-wrap; margin: 4px;"><p>Search <strong>subman events</strong> for a single vehicle</p></div>
+    <form onsubmit="event.preventDefault(); openUrl()">
+      <input type="text" id="vehicleInput" placeholder="Enter Vehicle ID">
+      <button type="submit">Go</button>
+    </form>
+  </div>
+
+  <script>
+    function openUrl() {
+      var vehicleId = document.getElementById("vehicleInput").value.trim();
+      if (vehicleId) {
+        var encodedId = encodeURIComponent(vehicleId);
+        var url = `https://evolutio-volkswagen-msla.saas.appdynamics.com/controller/#/location=ANALYTICS_ADQL_SEARCH&timeRange=last_8_days.BEFORE_NOW.-1.-1.11520&adqlQuery=SELECT%2520eventTimestamp%252C%2520operation%252C%2520vehicleId%252C%2520returnCode%252C%2520success%2520FROM%2520rp_raw_test%2520WHERE%2520operation%2520%253D%2520%2522updateCommunicationsProfile%2522%2520AND%2520vehicleId%2520LIKE%2520%2522${encodedId}*%2522%2520ORDER%2520BY%2520eventTimestamp%2520ASC&searchType=SINGLE&searchMode=ADVANCED&viewMode=VISUALIZATION&visualization=TABLE`;
+        console.log("Submit clicked: ", url);
+        window.open(url, '_blank');
+      }
+    }
+  </script>
+</body>
+</html>
