@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Details</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 10px;
+    }
+    button {
+      padding: 10px 15px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <button onclick="redirectToAnalytics()">Open Analytics Query</button>
+
+  <script>
+    function redirectToAnalytics() {
+      try {
+        const timeRangeMap = {
+          "last 5 minutes": "since 5 minutes",
+          "last 15 minutes": "since 15 minutes",
+          "last 30 minutes": "since 30 minutes",
+          "last 1 hour": "since 1 hours",
+          "last 2 hours": "since 2 hours",
+          "last 3 hours": "since 3 hours",
+          "last 4 hours": "since 4 hours",
+          "last 6 hours": "since 6 hours",
+          "last 12 hours": "since 12 hours",
+          "last 1 day": "since 1 days",
+          "last 3 day": "since 3 days",
+          "last 8 day": "since 8 days",
+          "last 1 week": "since 1 weeks",
+          "last 2 weeks": "since 2 weeks",
+          "last 1 month": "since 1 months",
+          "last 3 months": "since 3 months",
+          "last 6 months": "since 6 months",
+          "last 1 year": "since 1 years"
+        };
+
+        // Step 1: Get parent URL
+        const parentUrl = window.parent.location.href;
+        const baseUrl = parentUrl.split('/controller')[0];
+
+        // Step 2: Try to get time-range from AppD page
+        const spanText = window.parent.document.querySelector('.ads-time-range-selector-text')?.textContent.trim().toLowerCase();
+        console.log("time frame from the page: ", spanText);
+        const timeRange = timeRangeMap[spanText] || "since 1 days"; // Fallback
+        console.log("time frame to be used in ADQL:", timeRange);
+
+        // Step 3: Build ADQL query
+        const rawQuery = `SELECT vehicleId, count(*) AS "Failure Count" FROM rp_raw WHERE operation IN ("updateCommunicationsProfile", "switchCommunicationsProfile") AND success IS NULL ${timeRange}`;
+        const encodedQuery = encodeURIComponent(rawQuery);
+
+        // Step 4: Build final URL
+        const analyticsPath = `/#/location=ANALYTICS_ADQL_SEARCH&timeRange=last_3_hours.BEFORE_NOW.-1.-1.180&adqlQuery=${encodedQuery}&searchType=SINGLE&searchMode=ADVANCED&viewMode=VISUALIZATION&visualization=TABLE`;
+        const finalUrl = `${baseUrl}/controller${analyticsPath}`;
+        console.log("Final URL: ", finalUrl);
+
+        // Step 5: Open in new tab
+        window.open(finalUrl, '_blank');
+      } catch (e) {
+        alert('Failed to generate Analytics URL: ' + e.message);
+      }
+    }
+
+  </script>
+</body>
+</html>
