@@ -46,15 +46,13 @@
         // this URL is double-encoded to work correctly within AppDynamics
         // Original ADQL:
         /*
-          SELECT eventTimestamp, operation, vehicleId, lookupId, imei, eid, vehicleDataModelOcuState, 
-            vehicleDataModelDefaultMno, vehicleDataModelModelName, acspOperation, acspNotificationReason,
-            eventStatusResponseCode, commConfigNotificationCode
+          SELECT eventTimestamp, operation, vehicleId, eventStatusResponseCode
           FROM rp_raw
-          WHERE vehicleId LIKE "${vehicleId}*"
-          ORDER BY eventTimestamp asc
-          LIMIT 1000
+          WHERE operation IN ("commConfig", "updateCommunicationsProfile", "switchCommunicationsProfile")
+            AND vehicleId LIKE "${encodedId}*"
+          ORDER BY eventTimestamp ASC
         */
-        query = `SELECT eventTimestamp, operation, vehicleId, lookupId, imei, eid, vehicleDataModelOcuState, vehicleDataModelDefaultMno, vehicleDataModelModelName, acspOperation, acspNotificationReason, eventStatusResponseCode, commConfigNotificationCode FROM rp_raw WHERE vehicleId LIKE "${vehicleId}*" ORDER BY eventTimestamp asc LIMIT 1000`
+        query = `SELECT eventTimestamp, operation, vehicleId, eventStatusResponseCode FROM rp_raw WHERE operation IN ("commConfig", "updateCommunicationsProfile", "switchCommunicationsProfile") AND vehicleId LIKE "${vehicleId}*" ORDER BY eventTimestamp ASC`
         encoded = encodeURIComponent(query)
         encoded = encodeURIComponent(encoded)
         var url = `https://evolutio-volkswagen-msla.saas.appdynamics.com/controller/#/location=ANALYTICS_ADQL_SEARCH&timeRange=last_8_days.BEFORE_NOW.-1.-1.11520&adqlQuery=${query}&searchType=SINGLE&searchMode=ADVANCED&viewMode=VISUALIZATION&visualization=TABLE`;
