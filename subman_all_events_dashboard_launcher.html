@@ -54,7 +54,7 @@
           ORDER BY eventTimestamp asc
           LIMIT 1000
         */
-        query = `SELECT eventTimestamp, operation, vehicleId, lookupId, imei, eid, vehicleDataModelOcuState, vehicleDataModelDefaultMno, vehicleDataModelModelName, acspOperation, acspNotificationReason, eventStatusResponseCode, commConfigNotificationCode FROM rp_raw WHERE vehicleId LIKE "${vehicleId}*" ORDER BY eventTimestamp asc LIMIT 1000`
+        query = `SELECT eventTimestamp, operation, vehicleId, lookupId, imei, eid, vehicleDataModelOcuState AS "OCU state", vehicleDataModelDefaultMno AS "mno", vehicleDataModelModelName AS "model", acspOperation, acspNotificationReason, eventStatusResponseCode AS "response", commConfigNotificationCode FROM rp_raw WHERE vehicleId LIKE "${vehicleId}*" ORDER BY eventTimestamp asc LIMIT 1000`
         encoded = encodeURIComponent(query)
         encoded = encodeURIComponent(encoded)
         var url = `https://evolutio-volkswagen-msla.saas.appdynamics.com/controller/#/location=ANALYTICS_ADQL_SEARCH&timeRange=last_8_days.BEFORE_NOW.-1.-1.11520&adqlQuery=${query}&searchType=SINGLE&searchMode=ADVANCED&viewMode=VISUALIZATION&visualization=TABLE`;
